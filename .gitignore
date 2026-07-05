@@ -1,0 +1,21 @@
+# Build artifacts (all project folders)
+objects/
+*.o
+*.a
+*.so
+*.out
+
+# Compiled binaries produced by each project's Makefile
+Minishell/minishell
+Pipex/pipex
+Philosophers/philo
+miniRT/miniRT
+
+# Editor / OS cruft
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# miniRT vendored MLX42 build output
+miniRT/inc/MLX42/build/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:37:40 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/04/07 15:39:58 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/19 16:16:05 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,43 @@ t_color	scale_color(t_scene *scene, t_color color, double angle)
 	return (final_color);
 }
 
-t_color	trace_ray(t_scene *scene, t_ray ray)
+t_object	*find_closest(t_scene *scene, t_ray ray, t_intersection *hit)
 {
-	t_color			color;
-	t_object		*obj;
-	t_intersection	intersection;
-	double			distance;
+	t_object	*obj;
+	t_object	*closest;
+	double		distance;
 
-	color = (t_color){0, 0, 0};
 	obj = scene->all_objects;
+	closest = NULL;
 	distance = INFINITY;
 	while (obj)
 	{
-		intersection.angle = 0;
-		if (g_intersects[obj->type](scene, ray, \
-obj, &intersection) && intersection.distance < distance)
+		hit->distance = INFINITY;
+		if (g_intersects[obj->type](scene, ray, obj, hit)
+			&& hit->distance < distance)
 		{
-			distance = intersection.distance;
-			color = scale_color(scene, \
-g_get_color[obj->type](obj), intersection.angle);
+			closest = obj;
+			distance = hit->distance;
 		}
 		obj = obj->next;
+	}
+	hit->distance = distance;
+	return (closest);
+}
+
+t_color	trace_ray(t_scene *scene, t_ray ray)
+{
+	t_color			color;
+	t_object		*closest;
+	t_intersection	hit;
+
+	color = (t_color){0, 0, 0};
+	closest = find_closest(scene, ray, &hit);
+	if (closest)
+	{
+		g_get_angle[closest->type](scene, ray, closest, &hit);
+		color = scale_color(scene, \
+g_get_color[closest->type](closest), hit.angle);
 	}
 	return (color);
 }
