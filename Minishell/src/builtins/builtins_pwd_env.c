@@ -1,0 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins_pwd_env.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aelbouaz <aelbouaz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/16 15:40:47 by hariskon          #+#    #+#             */
+/*   Updated: 2026/02/17 14:04:09 by aelbouaz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "builtins.h"
+
+int	builtin_pwd(void)
+{
+	char	*working_dir;
+
+	working_dir = getcwd(NULL, 0);
+	if (!working_dir)
+		return (EXIT_FAILURE);
+	printf("%s\n", working_dir);
+	free(working_dir);
+	return (EXIT_SUCCESS);
+}
+
+int	builtin_env(int argc, char **argv, t_envp **env)
+{
+	t_envp	*temp;
+
+	(void)argv;
+	(void)argc;
+	if (!env)
+		return (EXIT_SUCCESS);
+	temp = *env;
+	while (temp)
+	{
+		if (temp->exported && temp->has_value)
+			printf("%s=%s\n", temp->identifier, temp->value);
+		temp = temp->next;
+	}
+	return (EXIT_SUCCESS);
+}
