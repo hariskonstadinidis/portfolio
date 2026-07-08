@@ -1,5 +1,9 @@
 # Haris Konstadinidis — Portfolio
 
+[![build](https://github.com/hariskonstadinidis/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/hariskonstadinidis/portfolio/actions/workflows/ci.yml)
+![language: C](https://img.shields.io/badge/language-C-00599C)
+![license: MIT](https://img.shields.io/badge/license-MIT-green)
+
 Systems-oriented software engineer in training at [Codam](https://codam.nl) (42 Network), with a background leading operations and teams before moving into software. I build things by understanding how they actually work underneath — this repo is the C/Unix systems work that came out of that.
 
 [GitHub](https://github.com/hariskonstadinidis) · [LinkedIn](https://www.linkedin.com/in/hariskon/) · haris_konstadinidis@protonmail.com
@@ -13,7 +17,13 @@ Systems-oriented software engineer in training at [Codam](https://codam.nl) (42 
 | [Pipex](./Pipex) | `cmd1 \| cmd2` reimplemented by hand with `fork`, `pipe`, `dup2`, `execve` | Process creation, file descriptors, PATH resolution |
 | [miniRT](./miniRT) | A ray tracer rendering spheres, planes, and capped cylinders with lighting and shadows | Vector math, 3D geometry, graphics pipeline |
 
-Every project folder has its own README with the architecture, the hard parts, the design decisions behind them, and what I'd do differently. These are Codam/42 curriculum projects — built, debugged, and evaluated by hand, not generated. Minishell and miniRT were team projects of two; Philosophers and Pipex are solo work.
+Every project folder has its own README with the architecture, the hard parts, the design decisions behind them, and what I'd do differently. These are Codam/42 curriculum projects — built, debugged, and evaluated by hand, not generated. Minishell and miniRT were team projects of two; Philosophers and Pipex are solo work. All four projects build from a clean checkout with `make` and compile with `-Wall -Werror -Wextra`; [CI](https://github.com/hariskonstadinidis/portfolio/actions/workflows/ci.yml) verifies this on every push.
+
+<p align="center">
+  <a href="./miniRT"><img src="miniRT/docs/renders/scene16.png" alt="miniRT render: four spheres over a plane with hard shadows" width="600"></a>
+  <br>
+  <em>Straight output from miniRT — more renders in the <a href="./miniRT">project README</a>.</em>
+</p>
 
 ## Why these projects
 
@@ -22,3 +32,7 @@ Each one forces a different kind of systems thinking: Minishell and Pipex are ab
 ## Background
 
 Before Codam, I spent several years at a bike courier company in the Netherlands, working up from courier to assistant manager to manager — running day-to-day operations, planning, scheduling, and team development. That's where the systems-thinking habit actually started: most of the job was finding where a process was quietly broken and fixing it. Codam is where I started applying that to software instead.
+
+## License
+
+My code in this repository is released under the [MIT License](./LICENSE). miniRT vendors [MLX42](https://github.com/codam-coding-college/MLX42), which carries its own license.

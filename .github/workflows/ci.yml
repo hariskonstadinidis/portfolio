@@ -1,0 +1,38 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: ${{ matrix.project }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - project: Minishell
+            deps: libreadline-dev
+            targets: make
+          - project: Philosophers
+            deps: ""
+            targets: make
+          - project: Pipex
+            deps: ""
+            targets: make && make bonus
+          - project: miniRT
+            deps: libglfw3-dev libgl1-mesa-dev
+            targets: make
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        if: matrix.deps != ''
+        run: sudo apt-get update && sudo apt-get install -y ${{ matrix.deps }}
+
+      - name: Build
+        working-directory: ${{ matrix.project }}
+        run: ${{ matrix.targets }}

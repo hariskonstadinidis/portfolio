@@ -6,6 +6,16 @@ A CPU ray tracer in C that renders spheres, planes, and capped cylinders with di
 
 **TL;DR:** Reads a scene description file, shoots one ray per pixel through a movable camera, solves the ray–object intersection math analytically for each shape, and shades every hit with ambient + diffuse lighting and shadow rays — no graphics API doing the work for you.
 
+## Renders
+
+| ![Four spheres over a plane, with hard shadows](docs/renders/scene16.png) | ![Colorful sphere spiral receding into the dark](docs/renders/scene3.png) |
+|:--:|:--:|
+| `scenes/scene16.rt` — spheres, plane, hard shadows | `scenes/scene3.rt` — 25-sphere spiral |
+| ![A structure built from eleven capped cylinders](docs/renders/scene12.png) | ![A tilted capped cylinder casting a shadow on a plane](docs/renders/scene14.png) |
+| `scenes/scene12.rt` — capped cylinders only | `scenes/scene14.rt` — cylinder caps + shadow |
+
+All images are straight program output, captured from the MLX42 window at 800×600 (`WIDTH`/`HEIGHT` in `inc/miniRT.h`; the committed default is 100×100 for fast test renders).
+
 ## Overview
 
 miniRT is a minimal ray tracer built from first principles: there is no rendering library underneath doing the geometry — MLX42 only puts finished pixels on screen. Everything else is vector math written by hand: camera ray generation from a configurable FOV, quadratic intersection solving, surface normals, a diffuse lighting model, and occlusion testing for shadows.
